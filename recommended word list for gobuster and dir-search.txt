@@ -1,0 +1,33 @@
+Wordlists are essential for tools like `gobuster` and `dirsearch` as they define the list of potential directories, files, or subdomains to probe for. Here's how you can get some popular wordlists and which ones I'd recommend:
+
+### **1. SecLists**
+
+**SecLists** is a collection of multiple types of lists used during security assessments. It's one of the most popular repositories for wordlists, and many professionals use it.
+
+**How to get it**:
+```bash
+git clone https://github.com/danielmiessler/SecLists.git
+```
+
+**Recommended wordlists within SecLists**:
+- For directory and file brute-forcing: `SecLists/Discovery/Web-Content/`
+  - `common.txt` is a general-purpose list.
+  - `raft-large-directories.txt` and `raft-large-files.txt` are more extensive lists.
+- For subdomain brute-forcing: `SecLists/Discovery/DNS/`
+  - `subdomains-top1million-110000.txt` is a good starting point.
+
+### **2. dirbuster wordlists**
+
+**DirBuster**, a tool from OWASP, comes with its own set of wordlists. If you've downloaded DirBuster before, you'd find the wordlists in its directory. They are also available online.
+
+**Recommended wordlists within DirBuster**:
+- `directory-list-2.3-medium.txt` is a balanced wordlist for directory and file brute-forcing.
+- `directory-list-2.3-small.txt` for quicker scans.
+
+### **Which one to download?**
+
+- If you're just starting out or need a general-purpose list, I'd recommend **SecLists**. The `common.txt` file in the `Discovery/Web-Content/` directory is a good starting point. It's comprehensive and widely used in the industry.
+  
+- If you're doing more intensive scanning or specific tasks, it might be worth downloading both and experimenting to see which one yields the results you're after.
+
+Remember, the success of a brute-forcing task doesn't just depend on the tool but also the quality and relevance of the wordlist. It's always a good idea to curate and customize wordlists based on the specific target or application you're testing. And always ensure you have permission before conducting any scans.

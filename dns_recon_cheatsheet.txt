@@ -1,0 +1,89 @@
+Certainly! Here's a cheatsheet for `dnsrecon`, a popular DNS enumeration tool:
+
+### DNSRecon Cheatsheet
+
+**Basic Usage:**
+
+```bash
+dnsrecon -d <target_domain>
+```
+
+**Specific DNS Server:**
+
+```bash
+dnsrecon -d <target_domain> -n <dns_server>
+```
+
+**Zone Transfer:**
+
+```bash
+dnsrecon -d <target_domain> -a
+```
+
+**Google Lookup:**
+
+```bash
+dnsrecon -d <target_domain> -g
+```
+
+**Brute Force Subdomains:**
+
+```bash
+dnsrecon -d <target_domain> -D <subdomains_file>
+```
+
+**TLD Expansion:**
+
+```bash
+dnsrecon -d <target_domain> -t tld
+```
+
+**Reverse Lookup of IPs in CIDR:**
+
+```bash
+dnsrecon -r <cidr_range>
+```
+
+**Cache Snooping (Check specific DNS server for cached records):**
+
+```bash
+dnsrecon -n <dns_server> -c
+```
+
+**SOA Record Enumeration:**
+
+```bash
+dnsrecon -d <target_domain> -t soa
+```
+
+**SPF Record Enumeration:**
+
+```bash
+dnsrecon -d <target_domain> -t spf
+```
+
+**All Enumerations:**
+
+```bash
+dnsrecon -d <target_domain> -t std
+```
+
+**Output to XML File:**
+
+```bash
+dnsrecon -d <target_domain> -o <output_file.xml>
+```
+
+**Increase Verbosity:**
+
+```bash
+dnsrecon -d <target_domain> -v
+```
+
+**Help Menu:**
+
+```bash
+dnsrecon -h
+```
+
+This cheatsheet provides a brief overview of the commonly used options with `dnsrecon`. The tool has a plethora of options that cater to various DNS enumeration needs. Always consult the `-h` or `--help` option or official documentation to dive deeper into the tool's capabilities.

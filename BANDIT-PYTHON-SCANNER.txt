@@ -1,0 +1,91 @@
+Certainly! Bandit is a great tool for scanning Python code for security vulnerabilities. Let's go through how to use Bandit step-by-step:
+
+### 1. **Running Bandit on Your Project**:
+
+To scan your entire Python project, navigate to the root directory of your project in the terminal or command prompt and run:
+
+```bash
+bandit -r .
+```
+
+Here:
+- `-r` or `--recursive` tells Bandit to scan files in the given directory and all subdirectories.
+- `.` specifies the current directory.
+
+### 2. **Understanding Bandit's Output**:
+
+When you run Bandit, it will provide output that looks something like:
+
+```
+Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+Severity: Low   Confidence: High
+Location: ./example.py:3
+1    def example1():
+2        '''this is a simple example'''
+3        assert False
+4        return True
+```
+
+- **Issue**: Describes the detected issue. Here, Bandit detected the use of `assert`, which is flagged because assert statements can be globally disabled with the `-O` (optimize) switch.
+  
+- **Severity**: The potential impact of the issue (Low, Medium, High).
+
+- **Confidence**: How sure Bandit is about the detected issue (Low, Medium, High).
+
+- **Location**: The file and line number where the issue was detected.
+
+### 3. **Filtering Results**:
+
+Bandit can produce a lot of output, especially if your codebase is large. You can filter results based on severity and confidence:
+
+```bash
+bandit -r . -ll -ii
+```
+
+Here:
+- `-ll` will only show issues of `Low` severity and higher.
+- `-ii` will only show issues of `Low` confidence and higher.
+
+### 4. **Output Formats**:
+
+Bandit can produce output in different formats, which can be useful if you want to integrate it with other tools. For example, to get the output in JSON format:
+
+```bash
+bandit -r . -f json -o output.json
+```
+
+Here:
+- `-f json` tells Bandit to produce output in JSON format.
+- `-o output.json` specifies the file where Bandit should save the output.
+
+### 5. **Ignoring Issues**:
+
+If you want to ignore specific issues, you can use the `-s` or `--skip` option:
+
+```bash
+bandit -r . -s B101
+```
+
+This command will run Bandit and skip any issues with the ID `B101`.
+
+### 6. **Configuration File**:
+
+You can create a `.bandit` configuration file to customize Bandit's behavior. This can include setting default ignored issues, specifying tests to run, and more.
+`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+Open Command Prompt or Terminal:
+
+    Navigate to the root directory of your project. This is the directory that contains all the folders you want to scan.
+
+Run Bandit Recursively:
+
+    Use the following command:
+
+    bash
+
+bandit -r .
+
+Here's what the command does:
+
+    bandit: This is the main command to run Bandit.
+    -r: This flag tells Bandit to run recursively, meaning it will scan the specified directory and all of its subdirectories.
+    .: This specifies the current directory. So, Bandit will scan the directory you're currently in (which should be the root of your project) and all of its subdirectories.

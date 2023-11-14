@@ -1,0 +1,41 @@
+Gobuster Cheat Sheet:
+
+    Basic directory/file brute-forcing:
+
+    bash
+
+gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html,js
+
+Using a custom wordlist and specifying extensions:
+
+bash
+
+gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,js,html,txt
+
+Increasing threads for faster scanning:
+
+bash
+
+gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html -t 50
+
+Setting a timeout:
+
+bash
+
+gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html --timeout 10s
+
+
+Of course, you're not being a nuisance at all! I'm here to help. Let's format the cheat sheet into tables and expand upon it:
+
+
+### **Gobuster Cheat Sheet**:
+
+| Command | Description |
+|---------|-------------|
+| `gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html,js` | Basic directory/file brute-forcing. |
+| `gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,js,html,txt` | Using a custom wordlist and specifying extensions. |
+| `gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html -t 50` | Increasing threads for faster scanning. |
+| `gobuster dir -u https://www.example.com -w path/to/wordlist.txt -x php,html --timeout 10s` | Setting a timeout. |
+| `gobuster dns -d example.com -w path/to/subdomains.txt` | Subdomain brute-forcing. |
+
+Please let me know if you'd like to add more commands or specific functionalities to the list, and I'd be happy to expand on it!

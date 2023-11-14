@@ -1,0 +1,39 @@
+Certainly! Here's how you can list process IDs:
+
+1. **On Windows using Command Prompt**:
+   You can use the `tasklist` command. This will display a list of currently running tasks, including their process IDs:
+   ```
+   tasklist
+   ```
+
+2. **On Windows using PowerShell**:
+   Use the `Get-Process` cmdlet to list all processes:
+   ```powershell
+   Get-Process | Format-Table ProcessName, Id -AutoSize
+   ```
+
+3. **On Linux/macOS**:
+   Use the `ps` command. The simplest way to see processes and their IDs is:
+   ```bash
+   ps aux
+   ```
+
+   The output columns are:
+   - `USER`: the user that owns the process
+   - `PID`: the process ID
+   - `%CPU`: the CPU usage
+   - `%MEM`: the memory usage
+   - `VSZ`: the virtual memory size in kilobytes (KB)
+   - `RSS`: the resident set size, which is the portion of the process's memory that is held in RAM, measured in KB
+   - `TT`: the controlling terminal type for the process (not always present)
+   - `STAT`: the process status
+   - `STARTED`: the start time of the command
+   - `TIME`: the total CPU time used by the task since it started
+   - `COMMAND`: the command that started the process
+
+   If you're only interested in the process names and their IDs, you can use:
+   ```bash
+   ps -eo pid,cmd
+   ```
+
+Remember, on Linux systems, the root user or using `sudo` might be required to see all processes if you want a system-wide listing, as a regular user might only see their own processes.
