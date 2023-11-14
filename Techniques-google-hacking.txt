@@ -1,0 +1,220 @@
+Certainly! Google hacking, also known as Google dorking, is a technique that uses specialized search queries to find specific information on the web, often information that may not have been intended for public consumption. The following is a list of some Google dorking techniques and their purposes:
+
+1. **Filetype Searches**:
+    - `filetype:pdf "confidential"`
+    - Used to search for specific file types, such as PDFs, DOCs, XLSs, and more.
+
+2. **Intitle and Allintitle Searches**:
+    - `intitle:"index of"`
+    - Searches for terms that appear in the page title.
+
+3. **Inurl and Allinurl Searches**:
+    - `inurl:adminlogin.asp`
+    - Searches for terms that appear in the URL.
+
+4. **Intext and Allintext Searches**:
+    - `intext:"password list"`
+    - Searches for terms that appear in the main body of the page.
+
+5. **Link Searches**:
+    - `link:example.com`
+    - Finds pages that link to a specific domain.
+
+6. **Cache Searches**:
+    - `cache:example.com`
+    - Displays Google's cached version of a page.
+
+7. **Info Searches**:
+    - `info:example.com`
+    - Displays a page's Google snippet, showing information Google has about the site.
+
+8. **Stock Information**:
+    - `stocks:GOOG`
+    - Displays stock information for a specific ticker.
+
+9. **Related Searches**:
+    - `related:example.com`
+    - Finds sites related to a specific domain.
+
+10. **Definitions**:
+    - `define:computer`
+    - Looks for definitions of a term.
+
+11. **Search for Sites Hosted by a Specific IP**:
+    - `site:ip_address`
+    - Searches for sites hosted by a specific IP address.
+
+12. **Search for Open Directories**:
+    - `intitle:"index of" "parent directory"`
+    - This can be used to locate open directories on the web.
+
+13. **Locating Webcams**:
+    - `inurl:/view.shtml`
+    - This can help locate publicly accessible webcams.
+
+14. **Locate Configuration Files**:
+    - `ext:conf NoCat`
+    - Searches for configuration files that may leak sensitive information.
+
+15. **Database Errors**:
+    - `intext:"An unexpected error occurred"`
+    - Used to find database errors which might lead to vulnerabilities.
+
+16. **Exposed Documentation**:
+    - `filetype:doc "sensitive but unclassified"`
+    - Searches for potentially sensitive documents that have been inadvertently exposed.
+
+17. **Search for Log Files**:
+    - `filetype:log inurl:"/logs/"`
+
+18. **Locating PHP Configuration Files**:
+    - `filetype:ini "extension=php_mysqli.dll"`
+    - These configurations might contain credentials and other sensitive details.
+
+19. **Locate Network Configuration Files**:
+    - `filetype:cfg mrtg "target"`
+    - Such files can leak network infrastructure details.
+
+20. **Find Usernames**:
+    - `intext:"username" filetype:log`
+    - Logs with usernames can sometimes also have passwords or other sensitive data.
+
+21. **Search for Private Keys**:
+    - `filetype:key intext:"-----BEGIN PRIVATE KEY-----"`
+    - Useful for locating inadvertently uploaded private keys.
+
+22. **Exposed Passwords in Configuration Files**:
+    - `ext:xml intext:"password" | "pass" | "admin"`
+    - XML configuration files may sometimes contain clear-text passwords.
+
+23. **Exposed SQL Files**:
+    - `filetype:sql intext:"INSERT INTO" -intext:"the"`
+    - SQL files may contain raw data dumps from databases.
+
+24. **Exposed Database Files**:
+    - `filetype:mdf "Password" | "UID"`
+    - MDF files are associated with Microsoft SQL Server databases.
+
+25. **Vulnerable Servers**:
+    - `intitle:"XAMPP" "Welcome to XAMPP"`
+    - Identifies servers running XAMPP, which may be improperly configured.
+
+26. **Unprotected PHPMyAdmin Pages**:
+    - `intitle:phpMyAdmin "Welcome to phpMyAdmin"`
+    - This can help locate unprotected phpMyAdmin interfaces.
+
+27. **Exposed Web Server Directories**:
+    - `intitle:"Index of" .htpasswd`
+    - .htpasswd is used to password protect parts of web servers, but sometimes these files are exposed.
+
+28. **Backup Files**:
+    - `filetype:bkf | filetype:bak`
+    - Backup files can contain copies of important data.
+
+29. **Git Directories**:
+    - `inurl:".git" intitle:"index of"`
+    - Exposed git repositories can give attackers the entire history of a project's source code.
+
+30. **Admin Pages**:
+    - `inurl:admin intitle:login`
+    - Locates potential administrator login pages.
+
+31. **Exposed Email Addresses**:
+    - `intext:"@" intext:"email" filetype:xls | filetype:csv`
+    - To find spreadsheets with email lists.
+
+32. **Vulnerable Web Applications**:
+    - `inurl:"/CFIDE/administrator"`
+    - Identifies sites running ColdFusion with an exposed administrator panel.
+
+33. **FTP File Dumps**:
+    - `intitle:"index of" inurl:ftp`
+    - Locates directories that are intended for file transfers.
+
+34. **Error Messages Indicating Vulnerabilities**:
+    - `"Warning: mysql_connect()" "invalid input syntax"`
+    - These error messages might hint at SQL injection vulnerabilities or misconfigurations.
+
+35. **Drupal CMS Admin Login Pages**:
+    - `inurl:user/login intitle:"drupal"`
+    - Identifies login pages for Drupal CMS installations.
+
+36. **WordPress Configuration Files**:
+    - `filetype:txt inurl:"wp-config.php"`
+    - Searches for WordPress configuration files that may contain database credentials.
+
+37. **Joomla! Configuration Files**:
+    - `filetype:txt "configuration.php" intext:"var $password"`
+    - Locates Joomla! CMS configuration files.
+
+38. **Exposed Passwords in .env Files**:
+    - `filetype:env "DB_PASSWORD"`
+    - .env files can contain environment variables for applications, including database passwords.
+
+39. **Database Connection Strings**:
+    - `filetype:udl data source`
+    - UDL files may have connection strings for databases.
+
+40. **Exposed Jupyter Notebooks**:
+    - `intitle:"Jupyter Notebook" inurl:tree`
+    - Locates Jupyter web interfaces that may contain code or data.
+
+41. **Publicly Exposed Dashboards**:
+    - `intitle:"Kibana" inurl:app/kibana`
+    - Searches for Kibana dashboards, often used for Elasticsearch and logging.
+
+42. **Locate Servers with Directory Listing Enabled**:
+    - `intitle:"Directory Listing For /" + inurl:webdav`
+    - WebDAV directories with listing enabled.
+
+43. **Search for SWF Files**:
+    - `filetype:swf`
+    - Flash files might contain vulnerabilities or interesting data.
+
+44. **Find Bash History Files**:
+    - `filetype:hist inurl:/root`
+    - Locates bash history files which might leak commands executed by users.
+
+45. **Find Servers with .bashrc or .bash_profile**:
+    - `filetype:conf inurl:bashrc | filetype:conf inurl:bash_profile`
+    - Locates configuration files for bash which might have interesting commands or aliases.
+
+46. **Elma Server Vulnerabilities**:
+    - `inurl:elmah.axd intext:"Detail.aspx?source="`
+    - ELMAH (Error Logging Modules and Handlers) can leak server details and errors.
+
+47. **Locate Exposed Webcam Feeds**:
+    - `inurl:"axis-cgi/mjpg" | inurl:"viewerframe?mode="`
+    - Searches for specific types of webcam feeds.
+
+48. **Search for Servers with Trace Method Enabled**:
+    - `inurl:trace.axd intitle:"eDebug"`
+    - .NET trace.axd files can leak detailed server error information.
+
+49. **Struts Configuration Files**:
+    - `filetype:xml inurl:struts-config`
+    - Exposed Struts configuration files can reveal app structure or potential misconfigurations.
+
+50. **Search for Login Portals**:
+    - `inurl:/login intitle:"login" -site:github.com -site:stackoverflow.com`
+    - Generic search for login portals, excluding popular sites like GitHub and StackOverflow.
+
+51. **Discovering Docker API Endpoints**:
+    - `intitle:"Docker Remote API" intext:"v1.37"`
+    - Exposed Docker APIs can allow unauthorized container management.
+
+52. **RDP Files**:
+    - `filetype:rdp rdp_network_level_auth`
+    - RDP configuration files can contain details for remote connections.
+
+53. **SAP Config Files**:
+    - `inurl:sap-config filetype:txt`
+    - Configuration details for SAP implementations.
+
+54. **VPN Configuration Files**:
+    - `filetype:pcf "cisco" | "group password"`
+    - PCF files can contain configuration and passwords for VPNs.
+
+55. **Locate Exposed Zabbix Panels**:
+    - `intitle:"Zabbix S.L. | Login"`
+    - Zabbix is a monitoring solution; an exposed panel can be a security risk.

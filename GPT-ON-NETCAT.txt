@@ -1,0 +1,52 @@
+Creating a table for `netcat` (often abbreviated as `nc`) commands can be very helpful for quick reference. Here's a simplified table for the `netcat` commands:
+
+| Option | Description |
+|--------|-------------|
+| `-4` | Force `nc` to use IPv4 addresses only. |
+| `-6` | Force `nc` to use IPv6 addresses only. |
+| `-b bufsize` | Specify buffer size for read operations. Default is 1024 bytes. |
+| `-D` | Enable debugging on the socket. |
+| `-d` | Do not attempt to read from stdin. |
+| `-E` | Use exclusive bind for listening TCP or UDP socket. Requires `-l` option. |
+| `-e program` | Execute external program after connection. |
+| `-F` | Do not close network socket after EOF on stdin. |
+| `-h` | Print `nc` help. |
+| `-I bufsize` | Set receive (input) socket buffer size. |
+| `-i interval` | Specify a delay time between lines of text sent and received. |
+| `-k` | Listen for another connection after the current one is closed. Requires `-l` option. |
+| `-L timeout` | Linger on close up to specified timeout in seconds. |
+| `-l` | Listen for an incoming connection. |
+| `-m byte_count` | Quit after receiving specific bytes. |
+| `-N file` | Specifies file with pattern for UDP port scanning. |
+| `-n` | Do not do any naming or service lookups. |
+| `-O bufsize` | Set send (output) socket buffer size. |
+| `-P proxy_username` | Specify a username for proxy server authentication. |
+| `-p port` | Specify the source or listen port. |
+| `-q timeout` | After EOF on stdin, wait for specified seconds and quit. |
+| `-R addr/port[/proto]` | Perform port redirection to a given host and port. |
+| `-r` | Choose destination ports randomly. |
+| `-s source_ip_address` | Specify the IP for sending packets. |
+| `-S sla-prop` | Specify properties of the MAC flow for the socket. |
+| `-T dscp` | Specify Differentiated Services Code Point for the connection. |
+| `-t` | Send RFC 854 DON'T and WON'T responses to DO and WILL requests. |
+| `-U` | Use Unix Domain Sockets. |
+| `-u` | Use UDP instead of TCP. |
+| `-v` | Verbose output. |
+| `-w timeout` | Close connection if idle for more than specified seconds. |
+| `-X proxy_protocol` | Specify protocol for proxy server. |
+| `-x proxy_address[:port]` | Connect using a proxy at specified address and port. |
+| `-Z` | Bind to address/port in all zones. |
+| `-z` | Perform port scan. |
+
+**Additional Commands:**
+
+| Option | Description |
+|--------|-------------|
+| `-C` | Send CRLF as line-ending. |
+| `-G gateway` | Source-routing hop point[s], up to 8. |
+| `-g gateway` | Loose source-routing hop point[s], up to 8. |
+| `-M secret` | Shared secret for TCP MD5 SIG (RFC2385). |
+| `-o file` | Hex dump of traffic. |
+| `-c` | Close connection on socket close. |
+
+This table provides a condensed overview of the `netcat` command options. It's recommended to refer to the man pages (`man nc`) or official documentation for detailed explanations and usage examples.

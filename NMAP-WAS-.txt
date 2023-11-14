@@ -1,0 +1,112 @@
+Certainly! Nmap is a highly versatile tool with a plethora of options and techniques for network scanning and reconnaissance. Here are several techniques you can employ using Nmap:
+
+### 1. **Ping Scan (Host Discovery):**
+To check if the host is online and skip port scanning:
+
+```bash
+nmap -sn www.example.com
+```
+
+### 2. **Basic Port Scan:**
+Scan the 1,000 most common ports:
+
+```bash
+nmap www.example.com
+```
+
+### 3. **Specific Port Scan:**
+Scan specific ports or ranges:
+
+```bash
+nmap -p 20-25,80,443 www.example.com
+```
+
+### 4. **All Ports Scan:**
+Scan all 65,535 ports:
+
+```bash
+nmap -p- www.example.com
+```
+
+### 5. **Service Version Detection:**
+Determine service and version information:
+
+```bash
+nmap -sV www.example.com
+```
+
+### 6. **Operating System Detection:**
+Guess the operating system:
+
+```bash
+nmap -O www.example.com
+```
+
+### 7. **Aggressive Scan:**
+This combines several options (`-O`, `-sV`, `-T4`, and more) for a more aggressive and faster scan:
+
+```bash
+nmap -A www.example.com
+```
+
+### 8. **TCP SYN Scan (Stealth Scan):**
+Performs a scan without completing the three-way handshake, making it less likely to be detected by intrusion detection systems:
+
+```bash
+nmap -sS www.example.com
+```
+
+### 9. **TCP Connect Scan:**
+This scan completes the TCP three-way handshake:
+
+```bash
+nmap -sT www.example.com
+```
+
+### 10. **UDP Scan:**
+Scans for open UDP ports:
+
+```bash
+nmap -sU www.example.com
+```
+
+### 11. **Script Scanning:**
+Nmap has a scripting engine that allows users to write and execute scripts to perform various tasks. The Nmap Scripting Engine (NSE) includes numerous predefined scripts:
+
+```bash
+nmap --script=default www.example.com
+```
+
+### 12. **Timing Templates:**
+Nmap offers timing templates to control the speed of the scan:
+
+```bash
+nmap -T4 www.example.com  # Options range from T0 (slowest) to T5 (fastest)
+```
+
+### 13. **Save Scan Outputs:**
+You can save scan outputs in various formats:
+
+```bash
+nmap -oN output.txt www.example.com  # Normal output
+nmap -oX output.xml www.example.com  # XML output
+```
+
+### 14. **Firewall Evasion Techniques:**
+Nmap provides several techniques to bypass firewalls, such as fragmenting packets:
+
+```bash
+nmap -f www.example.com
+```
+
+### 15. **Decoy Scanning:**
+Make it harder for the target to determine the real source of the scan:
+
+```bash
+nmap -D RND:10 www.example.com  # Uses random decoys
+nmap -D decoy1,decoy2,me www.example.com  # Uses specific decoys with 'me' representing the actual scanning machine
+```
+
+These are just a few of the numerous techniques and options available with Nmap. Always refer to the official Nmap documentation or use the `man nmap` command to explore more options and details. 
+
+**Note:** Ensure you have proper authorization before scanning any network or system. Unauthorized scanning is both unethical and illegal in many jurisdictions.

@@ -1,0 +1,130 @@
+Listing all available apps via the command line can vary depending on the operating system and what you exactly mean by "apps." Here are ways to list applications on both Windows and Linux:
+
+### Windows:
+
+1. **Using PowerShell (Recommended):**
+   - For all installed applications:
+     ```powershell
+     Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -AutoSize
+     ```
+   - For applications from the Windows Store:
+     ```powershell
+     Get-AppxPackage | Select-Object Name, Version, Publisher
+     ```
+
+2. **Using Command Prompt:** 
+   You can use the `wmic` command to list all installed applications:
+   ```bash
+   wmic product get name
+   ```
+
+### Linux:
+
+1. **Using the Package Manager:**
+   - For Debian/Ubuntu systems:
+     ```bash
+     dpkg --list
+     ```
+   - For Red Hat/Fedora systems:
+     ```bash
+     rpm -qa
+     ```
+   - For Arch Linux:
+     ```bash
+     pacman -Q
+     ```
+
+2. **Desktop Entries:** 
+   If you are specifically looking for graphical applications, they usually have `.desktop` files associated with them. You can list them with:
+   ```bash
+   ls /usr/share/applications/*.desktop
+   ```
+
+
+In the Windows Command Prompt (`cmd`), you can use the built-in utility `type` to display the contents of a text file. It's similar to the `cat` command in Linux.
+
+Here's how you can use it:
+
+```bash
+type filename.txt
+```
+
+Replace `filename.txt` with the path to your text file.
+
+If you need more advanced capabilities or want to edit the text file directly from the command line, you might consider using a third-party tool like `vim` for Windows or using PowerShell with tools like `Get-Content`.
+
+In PowerShell, the equivalent to `type` would be:
+
+```powershell
+Get-Content filename.txt
+```
+
+For just viewing, `type` or `Get-Content` should suffice. If you need to edit, consider getting a command-line text editor for Windows, like the mentioned `vim`, `emacs`, or others.
+
+
+Ejecting all external drives and forcefully canceling all processes accessing them can be a bit tricky, especially if you want to make sure you're not causing data corruption or loss. However, if you truly need to do this, you can follow the steps below for both Windows and Linux:
+
+### Windows
+
+1. **Kill Processes Accessing the Drive**:
+   - You can use tools like Sysinternals' `handle.exe` to determine which processes are accessing a particular drive and then kill those processes.
+   - Example:
+     ```
+     handle.exe E: | findstr "pid:" # This will list processes accessing drive E:
+     ```
+
+   - Then you can use `taskkill` to kill those processes.
+     ```
+     taskkill /PID process_number /F
+     ```
+
+2. **Eject the Drive**:
+   - You can safely eject the drive using the `mountvol` command followed by the drive letter and `/p`.
+     ```
+     mountvol E: /p
+     ```
+
+### Linux
+
+1. **Kill Processes Accessing the Drive**:
+   - You can use `lsof` to determine which processes are accessing a particular mount point and then kill those processes.
+   - Example:
+     ```
+     lsof /mount/point | awk '{print $2}' | uniq | xargs -I {} kill -9 {}
+     ```
+
+2. **Unmount the Drive**:
+   - You can use the `umount` command followed by the mount point to unmount the drive.
+     ```
+     umount -f /mount/point
+     ```
+
+3. **Eject the Drive (if it's an actual ejectable medium like a USB stick)**:
+   - If the external drive supports actual physical ejection (like ejecting a CD/DVD from a drive), you can use:
+     ```
+     eject /dev/sdX # replace sdX with your drive's device name
+     ```
+
+**Caution**: Forcibly killing processes and ejecting drives can lead to data loss or corruption. Always ensure that you have backups of important data and only force ejection when absolutely necessary.
+
+
+
+On Windows, there isn't a direct equivalent to the `lsusb` command found on Linux. However, there are various ways to get similar information about USB devices on a Windows system:
+
+1. **Device Manager**: This graphical utility can be accessed by right-clicking on the Start button and selecting "Device Manager." Here, you can see all attached devices, including those connected via USB. 
+
+2. **Powershell**: You can use the `Get-PnpDevice` cmdlet to list USB devices.
+
+   ```powershell
+   Get-PnpDevice | Where-Object { $_.Class -eq "USB" }
+   ```
+
+3. **USBDeview**: This is a freeware tool provided by NirSoft that lists all USB devices currently connected to your computer, as well as all USB devices that you previously used. It provides comprehensive information, similar to `lsusb`.
+
+4. **WMIC**: Windows Management Instrumentation Command-line (WMIC) can be used to list USB devices:
+
+   ```bash
+   wmic path Win32_USBControllerDevice get Dependent
+   ```
+
+While these methods give information similar to `lsusb`, they might not provide the exact same depth of detail or format. If you need to frequently access such information on Windows, third-party utilities like USBDeview might be your best bet.

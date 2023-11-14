@@ -1,0 +1,23 @@
+Cipher Block Chaining (CBC) is a mode of operation for block ciphers. In CBC mode, each block of plaintext is XORed with the previous ciphertext block before being encrypted. Padding is often required to fill the last block up to the block size.
+
+
+Deatiled walkthough of a CBC Padding Attack
+
+
+Decrypting the First Byte:
+
+    Preparation:
+The attacker creates a block RR with arbitrary bytes and selects a target ciphertext block CiCi​ they wish to decrypt. They query the padding oracle with R∣∣CiR∣∣Ci​ to check for valid padding. The likelihood of valid padding is low due to randomness.
+
+    Modifying for Valid Padding:
+The attacker aims to manipulate the message to achieve valid padding, specifically a last byte of 01 which always denotes valid padding in PKCS#5. To do this, they modify the last byte of RR, denoted rbrb​, trying all possible values until the padding oracle indicates valid padding.
+
+Discovering the Padding Length:
+
+    Determining Padding Length:
+    After achieving valid padding, the attacker starts modifying bytes from the left of PiPi​ by adjusting the corresponding bytes in RR. When the padding breaks, the attacker identifies the first byte of the padding, hence deducing the padding length and value.
+
+Decrypting One Byte:
+
+    Decryption Equation:
+    The attacker has decrypted the last byte of the target block CiCi​. They know that D(Ci)[b]⊕rb=01D(Ci​)[b]⊕rb​=01, and can rearrange this equation to find D(Ci)[b]=01⊕rbD(Ci​)[b]=01⊕rb​.

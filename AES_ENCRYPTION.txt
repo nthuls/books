@@ -1,0 +1,188 @@
+__________________________________________________________________________________CODE EXAMPLE______________________________________________________________________________________________
+import numpy as np  # numpy for numerical operations, though we don't use it much here
+
+# Key Expansion - Generating multiple round keys from the initial encryption key
+def dummy_key_expansion(initial_key, num_rounds):
+    """Generate a list of round keys based on the initial key."""
+    round_keys = [initial_key]
+    for i in range(num_rounds):
+        # Here, we're just adding the round number to each byte for simplicity
+        new_key = [(byte + i) % 256 for byte in round_keys[-1]]
+        round_keys.append(new_key)
+    return round_keys
+
+# SubBytes - Byte substitution using a fixed table (S-box)
+def sub_bytes(state):
+    """A dummy S-box substitution."""
+    # Here we're using a dummy S-box that maps each byte to itself
+    s_box = [i for i in range(256)]
+    return [s_box[byte] for byte in state]
+
+# ShiftRows - Cyclically shifting the rows of the state
+def shift_rows(state):
+    """Simple rotation."""
+    return state[1:] + state[:1]  # Rotating the state
+
+# MixColumns - Mixing columns for diffusion
+def mix_columns(state):
+    """A basic operation to mix data."""
+    return [(byte + state[i - 1]) % 256 for i, byte in enumerate(state)]
+
+# AddRoundKey - Combining state with a round key using XOR operation
+def add_round_key(state, round_key):
+    """XOR with the round key."""
+    return [byte ^ k for byte, k in zip(state, round_key)]
+
+# AES encryption process
+def aes_encrypt(plaintext, initial_key, num_rounds):
+    """A simplified AES encryption function."""
+    round_keys = dummy_key_expansion(initial_key, num_rounds)
+
+    # Starting with adding the initial round key
+    state = add_round_key(plaintext, round_keys[0])
+    print(f"After initial round key addition: {state}")
+
+    # Main rounds
+    for i in range(1, num_rounds):
+        state = sub_bytes(state)
+        print(f"After SubBytes in round {i}: {state}")
+
+        state = shift_rows(state)
+        print(f"After ShiftRows in round {i}: {state}")
+
+        state = mix_columns(state)
+        print(f"After MixColumns in round {i}: {state}")
+
+        state = add_round_key(state, round_keys[i])
+        print(f"After AddRoundKey in round {i}: {state}")
+
+    # Final round (no MixColumns step)
+    state = sub_bytes(state)
+    print(f"After SubBytes in final round: {state}")
+
+    state = shift_rows(state)
+    print(f"After ShiftRows in final round: {state}")
+
+    state = add_round_key(state, round_keys[-1])
+    print(f"After AddRoundKey in final round: {state}")
+
+    return state
+
+# AES decryption process - Mostly the inverse operations of the encryption steps
+def aes_decrypt(ciphertext, initial_key, num_rounds):
+    """A simplified AES decryption function."""
+    round_keys = dummy_key_expansion(initial_key, num_rounds)
+    
+    state = add_round_key(ciphertext, round_keys[-1])  # Initial round key addition
+    print(f"After initial round key addition: {state}")
+
+    for i in range(num_rounds - 1, 0, -1):  # We're going backward through the rounds
+        state = inv_shift_rows(state)
+        print(f"After InvShiftRows in round {i}: {state}")
+
+        state = inv_sub_bytes(state)
+        print(f"After InvSubBytes in round {i}: {state}")
+
+        state = add_round_key(state, round_keys[i])
+        print(f"After AddRoundKey in round {i}: {state}")
+
+        state = inv_mix_columns(state)
+        print(f"After InvMixColumns in round {i}: {state}")
+
+    # Final round (no InvMixColumns step)
+    state = inv_shift_rows(state)
+    print(f"After InvShiftRows in final round: {state}")
+
+    state = inv_sub_bytes(state)
+    print(f"After InvSubBytes in final round: {state}")
+
+    state = add_round_key(state, round_keys[0])
+    print(f"After AddRoundKey in final round: {state}")
+
+    return state
+
+# Inverse of SubBytes
+def inv_sub_bytes(state):
+    inv_s_box = [i for i in range(256)]
+    return [inv_s_box[byte] for byte in state]
+
+# Inverse of ShiftRows
+def inv_shift_rows(state):
+    return state[-1:] + state[:-1]
+
+# Inverse of MixColumns - Note: This is a dummy inverse and might not perfectly reverse the operation
+def inv_mix_columns(state):
+    return [(byte - state[i - 1]) % 256 for
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### 1. Key Expansion:
+
+In AES, the initial encryption key is expanded into several "round keys." These round keys are used in each of the encryption rounds.
+
+**In our example:** 
+The `dummy_key_expansion` function is a highly simplified version of the actual key expansion process. It merely increments each byte of the key for each round. 
+
+In real AES, the key expansion involves more complex operations, such as byte substitution using an S-box, bitwise shifts, and a round constant addition.
+
+### 2. SubBytes (Substitution):
+
+This step introduces "confusion" into the data, which is a core principle of cryptography. Each byte of data is replaced with another byte.
+
+**In our example:**
+We've created a dummy S-box (`s_box`) that simply maps a byte to itself (i.e., identity mapping). In real AES, the S-box is a fixed table derived from a mathematical function. The actual AES S-box provides non-linearity, making it difficult to deduce the original value after substitution.
+
+### 3. ShiftRows:
+
+This step is a transposition operation where rows in the data matrix are shifted cyclically. It helps in spreading the data values.
+
+**In our example:**
+The `shift_rows` function simply rotates the entire state, moving the first byte to the end. Real AES operates on a 4x4 matrix of bytes, where each row is shifted by an increasing offset.
+
+### 4. MixColumns:
+
+This operation provides diffusion, ensuring that the output is influenced by multiple parts of the input. It mixes the columns of the state.
+
+**In our example:**
+The `mix_columns` function performs a basic operation where each byte is modified by adding it to its previous byte. In actual AES, a more complex matrix multiplication is performed in the finite field.
+
+### 5. AddRoundKey:
+
+This step combines the state with the round key using the bitwise XOR operation. This introduces the key into the state, ensuring that without the key, it would be challenging to reverse the operations.
+
+**In our example:**
+The function `add_round_key` takes the current state and the round key and performs a simple XOR operation on each corresponding byte.
+
+---
+
+In essence, the sequence of transformations (SubBytes, ShiftRows, MixColumns, AddRoundKey) in each round ensures that the original plaintext is both diffused and obscured, making it computationally infeasible to derive the original data from the ciphertext without the key. Each round further scrambles the data, and with the introduction of the round keys, security against attacks is enhanced. 
+
+Remember, the provided Python functions are overly simplified and are just to give you a structural understanding of how AES works. The actual AES algorithm involves more intricate mathematical operations to ensure robust security.
+
+
+
+From the provided output, it's clear that this is the printout for the encryption process using our earlier script. The program is printing the state of the data after each step within the rounds of the AES encryption.
+
+To recap what each step does:
+
+1. **AddRoundKey**: This is the first step and is done before any rounds. It combines the data with the initial round key using bitwise XOR.
+2. **SubBytes**: Substitutes bytes based on a lookup table, in our dummy example, it's an identity function, so no real change.
+3. **ShiftRows**: Shifts the rows of the data to introduce diffusion.
+4. **MixColumns**: A mixing operation that works column-wise on the data to ensure diffusion.
+5. **AddRoundKey**: Combines the current data state with the respective round key using bitwise XOR.
+
+The steps repeat for each round, with the number of rounds dependent on the key size. In our dummy AES implementation, we've used 10 rounds for a 128-bit key.
+
+For decryption, we would reverse the process. Given the complexity of reversing the entire process, especially MixColumns, which is the most complicated step to reverse, our simple implementation may not produce the exact plaintext when decrypting. 
+
+Here's the core idea for decryption:
+1. Use the last round key to perform the initial AddRoundKey.
+2. For each round, starting from the last one:
+   1. Reverse ShiftRows (`InvShiftRows`).
+   2. Reverse SubBytes (`InvSubBytes`).
+   3. Apply the previous round key with `AddRoundKey`.
+   4. Reverse MixColumns (`InvMixColumns`).
+
+In real AES, because of the mathematical properties of the operations, especially MixColumns and its inverse, decryption will recover the original plaintext. 
+
+If you'd like a working decryption routine based on our dummy example, it would require creating "inverse" functions, especially for `MixColumns`. However, due to the simplicity of our example, it might not be an exact reversal. But I can certainly provide a mirrored process if you want to see the structural flow!

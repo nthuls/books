@@ -1,0 +1,44 @@
+To uninstall applications from the command line in Windows, you can use PowerShell or Command Prompt with the appropriate methods:
+
+### Using PowerShell:
+
+1. **For Traditional Programs**:
+   
+   First, you can list all installed programs with:
+   ```powershell
+   Get-WmiObject -Class Win32_Product | Select-Object Name
+   ```
+
+   To uninstall a specific program, use the following command (replace "ProgramName" with the exact name of the program):
+   ```powershell
+   Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -match "ProgramName" } | ForEach-Object { $_.Uninstall() }
+   ```
+
+2. **For Windows Store Apps**:
+   
+   First, list all installed store apps with:
+   ```powershell
+   Get-AppxPackage | Select-Object Name, PackageFullName
+   ```
+
+   To uninstall a specific store app, use the following command (replace "PackageFullName" with the exact full name from the list):
+   ```powershell
+   Get-AppxPackage PackageFullName | Remove-AppxPackage
+   ```
+
+### Using Command Prompt:
+
+1. **Using `wmic`**:
+   
+   First, you can list all installed programs with:
+   ```bash
+   wmic product get name
+   ```
+
+   To uninstall a specific program, use:
+   ```bash
+   wmic product where name="ProgramName" call uninstall
+   ```
+   Replace "ProgramName" with the exact name of the program.
+
+**Note**: Be careful when using these commands, especially the uninstall commands. Ensure you are targeting the correct application. Additionally, using the `Win32_Product` class in `Get-WmiObject` can be slow and might trigger a consistency check on installed programs, so use it judiciously.

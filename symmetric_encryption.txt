@@ -1,0 +1,85 @@
+Certainly! Let's delve into these symmetric encryption algorithms:
+
+1. **AES (Advanced Encryption Standard):**
+    - **Type:** Block cipher.
+    - **Key lengths:** 128, 192, or 256 bits.
+    - **Block size:** 128 bits.
+    - **Noteworthy:** AES has become the de facto standard for symmetric encryption in many applications. It replaced DES as the standard encryption algorithm. It's considered secure against all known practical attacks when correctly implemented and used.
+
+2. **DES (Data Encryption Standard):**
+    - **Type:** Block cipher.
+    - **Key length:** 56 bits (with 8 parity bits for a total of 64 bits).
+    - **Block size:** 64 bits.
+    - **Noteworthy:** DES was the first encryption standard endorsed by the U.S. government. It has been found vulnerable to brute-force attacks due to its short key length. As a result, 3DES (Triple DES) was introduced, which applies the DES algorithm three times to each data block.
+
+3. **IDEA (International Data Encryption Algorithm):**
+    - **Type:** Block cipher.
+    - **Key length:** 128 bits.
+    - **Block size:** 64 bits.
+    - **Noteworthy:** IDEA was designed as a replacement for DES. It was used in early versions of PGP (Pretty Good Privacy) for encrypting email.
+
+4. **BLOWFISH:**
+    - **Type:** Block cipher.
+    - **Key length:** Variable, from 32 bits to 448 bits.
+    - **Block size:** 64 bits.
+    - **Noteworthy:** Developed by Bruce Schneier as a replacement for DES or IDEA. It's known for its speed and effectiveness. However, its successor, Twofish, was later designed with a block size of 128 bits and key lengths up to 256 bits.
+
+5. **RC4:**
+    - **Type:** Stream cipher.
+    - **Key length:** Variable, typically between 40 and 256 bits.
+    - **Noteworthy:** RC4 is simple and fast, which led to its widespread use in protocols like SSL/TLS in the past. However, vulnerabilities were discovered over time, leading many to move away from its use.
+
+6. **RC5 and RC6:**
+    - **RC5:**
+        - **Type:** Block cipher.
+        - **Key length:** Variable.
+        - **Block size:** Variable.
+        - **Noteworthy:** Designed by Ron Rivest in 1994. It's parameterized, allowing a choice in block size, key size, and the number of rounds.
+    - **RC6:**
+        - **Type:** Block cipher.
+        - **Key length:** 128, 192, or 256 bits.
+        - **Block size:** 128 bits.
+        - **Noteworthy:** It was a finalist in the AES competition. RC6 incorporated integer multiplication and used more complex key-expanding and data-dependent rotations.
+
+While SSH supports a variety of encryption algorithms, it's worth noting that some of these (like DES and RC4) are considered insecure today and are not recommended for use. When setting up or inspecting SSH configurations, it's always a good idea to opt for more modern, secure ciphers like AES.
+
+Keep in mind that while symmetric encryption is used for the bulk data transfer in an SSH session, asymmetric encryption (public-private key pairs) is used for authentication and initial key exchange.
+
+
+
++++++++++++++++++++++++++++++++++++AES
+
+Absolutely, let's delve deeper into the AES cipher's workings:
+
+AES, or Advanced Encryption Standard, operates on a fixed block of 16 bytes, or 128 bits. Regardless of the key length (128, 192, or 256 bits), the block size remains the same.
+
+The AES algorithm can be viewed as a series of transformations that are applied to the input data, known as plaintext, to produce the encrypted output, or ciphertext. These transformations are applied in multiple rounds, and the number of rounds varies depending on the key length, as you noted.
+
+Here's a high-level overview of the structure:
+
+1. **Initialization:** 
+    - The input data block is combined with the initial key using the **XOR** (bitwise exclusive or) operation. This process is called the "initial round key addition."
+
+2. **Main Rounds:**
+    - Each round consists of several processing steps:
+        - **SubBytes:** A non-linear substitution step where each byte of the block is replaced with another byte from a predefined table, known as the S-box.
+        - **ShiftRows:** A transposition step where the last three rows of the state are shifted cyclically a certain number of steps.
+        - **MixColumns:** A mixing operation that operates on the columns of the state, combining the four bytes in each column.
+        - **AddRoundKey:** The result of the previous three steps is combined with a round key derived from the encryption key.
+    - These steps are repeated multiple times (10, 12, or 14 rounds) depending on the key length.
+
+3. **Final Round:**
+    - The final round is slightly different from the previous rounds. It includes:
+        - **SubBytes**
+        - **ShiftRows**
+        - **AddRoundKey**
+    - Notice that the **MixColumns** step is omitted in the final round.
+
+The reason for multiple rounds in encryption is to increase the cipher's complexity and security. With each round, the data becomes more scrambled and further removed from its original form, making it more challenging for adversaries to break the encryption.
+
+At the end of these rounds, you end up with a block of ciphertext, which, for all practical purposes, bears no discernible relation to the plaintext without the correct decryption key.
+
+Decryption in AES is not just a simple reverse of the encryption process. While the same rounds are used, their order and the processes are executed in the inverse, ensuring the ciphertext is converted back to the original plaintext.
+
+AES's strength comes from the combination of these steps and rounds, the S-boxes' non-linearity, the diffusion due to MixColumns, and the complexity introduced by the key expansion process. It's widely regarded as a robust encryption algorithm, resistant against known cryptographic attacks when implemented correctly.
+

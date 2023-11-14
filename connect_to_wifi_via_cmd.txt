@@ -1,0 +1,83 @@
+To connect to a Wi-Fi network via Command Line or PowerShell, you typically use the `netsh` command on Windows. Here's a step-by-step guide:
+
+### Using Command Prompt or PowerShell:
+
+1. **List all Wi-Fi profiles**:
+    ```
+    netsh wlan show profiles
+    ```
+
+    This will show you a list of all the Wi-Fi profiles saved on your computer.
+
+2. **Connect to a Wi-Fi network**:
+
+    If you've previously connected to the Wi-Fi network, it would have a saved profile. You can use:
+    ```
+    netsh wlan connect name="ProfileName"
+    ```
+    Replace `ProfileName` with the name of the Wi-Fi profile.
+
+    If you haven't connected to the network before, you might not have a profile saved. In such cases, you'd first need to create a profile and then connect. This process is more involved as it requires you to set up an XML configuration file for the profile.
+
+3. **Disconnect from a Wi-Fi network**:
+    You can turn off your Wi-Fi using:
+    ```
+    netsh interface set interface "Wi-Fi" admin=disable
+    ```
+    And you can turn it back on using:
+    ```
+    netsh interface set interface "Wi-Fi" admin=enable
+    ```
+
+    Note: The adapter name "Wi-Fi" might vary based on your system configuration. Adjust it accordingly if you get an error.
+
+### Connecting to a new Wi-Fi network:
+
+If you're trying to connect to a new Wi-Fi network that doesn't have a profile saved on your computer, it's a bit more complex. You'd have to set up a profile using an XML configuration file, then add this profile, and then connect. Here's a basic idea:
+
+1. **Create an XML file** with the following content:
+
+    ```xml
+    <?xml version="1.0"?>
+    <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+        <name>YOUR_SSID</name>
+        <SSIDConfig>
+            <SSID>
+                <hex>HEX_SSID</hex>
+                <name>YOUR_SSID</name>
+            </SSID>
+        </SSIDConfig>
+        <connectionType>ESS</connectionType>
+        <connectionMode>manual</connectionMode>
+        <MSM>
+            <security>
+                <authEncryption>
+                    <authentication>WPA2PSK</authentication>
+                    <encryption>AES</encryption>
+                    <useOneX>false</useOneX>
+                </authEncryption>
+                <sharedKey>
+                    <keyType>passPhrase</keyType>
+                    <protected>false</protected>
+                    <keyMaterial>YOUR_WIFI_PASSWORD</keyMaterial>
+                </sharedKey>
+            </security>
+        </MSM>
+    </WLANProfile>
+    ```
+
+    Replace `YOUR_SSID` with the SSID of your network, `HEX_SSID` with the hex representation of your SSID, and `YOUR_WIFI_PASSWORD` with your Wi-Fi password.
+
+2. **Add the profile**:
+    ```
+    netsh wlan add profile filename="path_to_xml_file.xml"
+    ```
+
+3. **Connect**:
+    ```
+    netsh wlan connect name="YOUR_SSID"
+    ```
+
+Keep in mind that the XML configuration provided above is a basic template for WPA2-PSK networks. Depending on the security type and settings of your Wi-Fi network, you might need to adjust the XML configuration accordingly.
+
+Always be cautious when handling Wi-Fi profiles, especially in scripts, as they can sometimes expose sensitive data like Wi-Fi passwords.

@@ -1,0 +1,31 @@
+If you want to target a specific network with `bettercap`, you don't use the `net.sniff.local` command because that command is specifically for capturing traffic that originates from or is destined to the host machine (localhost). Instead, you need to define the target network's scope using various other commands and options in `bettercap`.
+
+Here’s how you can target a specific network:
+
+1. **Specify the target IP range:** You need to define the IP range of the network you want to sniff. You can do this using the `net.probe` command to discover hosts in a network, or if you already know the network range, you can directly specify the targets using the `targets` command.
+
+   Example:
+   ```
+   » set net.probe on
+   » set targets 192.168.1.1/24
+   ```
+
+2. **Use the `net.sniff.on` command to start sniffing:** Once the targets are set, you can start the sniffer.
+
+   ```
+   » net.sniff.on
+   ```
+
+3. **Filter the traffic:** If you're interested in specific types of traffic, you can still use the `net.sniff.filter` command to define what you want to capture. For instance, if you want to capture traffic on a specific port or to and from a specific IP.
+
+   Example for capturing traffic for a specific IP:
+   ```
+   » set net.sniff.filter 'host 192.168.1.105'
+   ```
+
+   Example for capturing traffic for a specific port (e.g., HTTP traffic on port 80):
+   ```
+   » set net.sniff.filter 'port 80'
+   ```
+
+Please remember, targeting specific networks and sniffing traffic without authorization is illegal and unethical. Ensure you have explicit permission to monitor and capture network traffic in any environment you are working in. These commands and tools are intended for cybersecurity professionals conducting authorized penetration testing or for individuals working within their own lab environments for educational purposes.

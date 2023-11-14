@@ -1,0 +1,52 @@
+Absolutely! Bitwise operations work on individual bits of binary data. The vertically separated images serve as a great tool to visualize these operations because the distinction between black (binary `0`) and white (binary `1`) is clear.
+
+Given the two vertically separated images:
+1. **Image 1:** Left half black, right half white.
+2. **Image 2:** Left half white, right half black.
+
+Let's break down the bitwise operations:
+
+### 1. Bitwise AND (`&`):
+It returns `1` only when both corresponding bits are `1`.
+
+**Visualization using images:**
+- Where both Image 1 and Image 2 are white (remember, white stands for `1`), the output will be white.
+- Where both Image 1 and Image 2 are black or one of them is black, the output will be black.
+
+Given our images, there are no overlapping white regions, so the entire output is black.
+
+### 2. Bitwise OR (`|`):
+It returns `1` when at least one of the corresponding bits is `1`.
+
+**Visualization using images:**
+- Where either Image 1 or Image 2 (or both) is white, the output will be white.
+- Only when both Image 1 and Image 2 are black, the output will be black.
+
+Given our images, every position has at least one white pixel (from Image 1 or Image 2), so the entire output is white.
+
+### 3. Bitwise XOR (`^`):
+It returns `1` only when the corresponding bits differ.
+
+**Visualization using images:**
+- Where Image 1 and Image 2 have different colors (one is white and the other is black), the output will be white.
+- Where Image 1 and Image 2 have the same color, the output will be black.
+
+Given our images, every position has pixels of different colors in Image 1 and Image 2, so the entire output is white.
+
+### 4. Bitwise NOT (`~`):
+It simply inverts each bit: `0` becomes `1`, and `1` becomes `0`.
+
+**Visualization using images:**
+- Where Image 1 is white, the NOT output will be black.
+- Where Image 1 is black, the NOT output will be white.
+
+So, the "Bitwise NOT Image 1" will have its colors inverted, i.e., left half white and right half black. Similarly, the "Bitwise NOT Image 2" will have its left half black and right half white.
+
+To sum it up:
+
+- **Bitwise AND:** Only turns on the output bit if both input bits are on.
+- **Bitwise OR:** Turns on the output bit if either of the input bits are on.
+- **Bitwise XOR:** Turns on the output bit if exactly one of the input bits is on (exclusive OR).
+- **Bitwise NOT:** Simply inverts the input bit.
+
+The results you get by running the code should confirm these behaviors.

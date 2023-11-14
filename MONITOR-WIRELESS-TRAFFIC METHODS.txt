@@ -1,0 +1,90 @@
+To monitor what sites are being visited on machines within your test environment, you can use several methods. The most common approach is to capture and analyze web traffic, which typically uses HTTP and HTTPS protocols.
+
+Here are some methods you could use:
+
+1. **Network Traffic Analysis**:
+    - **Packet Sniffing Tools**: You can use packet sniffing tools like Wireshark, `tcpdump`, or `bettercap` to capture and analyze network traffic. For HTTP traffic (which is less common these days as most traffic is encrypted), you can easily see the hostnames in plaintext. For HTTPS traffic, you'll typically only see the domain names due to encryption, not the full URL.
+    - **Command with bettercap**:
+        ```
+        » set net.sniff.on
+        » set net.sniff.filter 'tcp and (port 80 or port 443)'
+        ```
+        This will capture the TCP traffic on HTTP and HTTPS ports.
+
+2. **DNS Monitoring**:
+    - Monitor DNS queries on your network. This won't show full URLs but will show you which domains your devices are attempting to access.
+    - Tools like `tcpdump` can capture DNS traffic or you can log DNS queries from your DNS server.
+
+3. **HTTP Proxy**:
+    - Set up an HTTP proxy server and configure your devices to route web traffic through the proxy. The proxy can log all HTTP and HTTPS requests, including full URLs for HTTP.
+    - For HTTPS, you may only see the domain name unless you implement SSL/TLS interception, which involves significant configuration and the installation of a proxy server's SSL certificate on each client machine (not recommended for general use due to privacy concerns).
+
+4. **Logging at the Router or Firewall**:
+    - Many routers and firewalls can keep logs of the web traffic that passes through them. Check if your router or firewall supports this feature and enable logging.
+
+5. **Browser History**:
+    - On the client machines, if you have access, you can simply check the browser history to see what sites have been visited.
+
+6. **Software Solutions**:
+    - Install network monitoring software designed to track and report on web activity. Examples include Nagios, Zabbix, or commercial web filtering software that provides reporting functionality.
+
+Remember, even in a test environment, it's essential to ensure that any monitoring is done transparently and with the consent of all parties involved if it's not solely your traffic. This helps maintain privacy and complies with ethical standards.
+
+Here's a simple breakdown of how you might capture this data in `bettercap` and then analyze it with Wireshark:
+
+1. Start capturing packets with `bettercap`:
+   ```
+   sudo bettercap -iface <your_network_interface>
+   ```
+
+2. Filter and capture the desired traffic:
+   ```
+   set net.sniff.on
+   set net.sniff.filter 'tcp and (port 80 or port 443)'
+   set net.sniff.output 'web-traffic.pcap'
+   ```
+
+3. Open the `.pcap` file with Wireshark:
+   ```
+   wireshark web-traffic.pcap
+   ```
+
+Within Wireshark, you'll be able to filter for HTTP GET requests, which may look something like this:
+
+```
+http.request.method == "GET"
+```
+
+For HTTPS, you can filter by the TLS Handshake and look for the Server Name Indication (SNI) which might give you the domain name:
+
+```
+ssl.handshake.type == 1
+```
+
+.......................................................................................PART 2..............................................................................................
+
+If you're working within your lab environment and you have authorization to monitor network traffic, `bettercap` can indeed be used to see the URLs or traffic passing through your network in real-time. To do this, you'll generally need to follow these steps:
+
+1. **Setup bettercap for sniffing:**
+   You can start by setting up bettercap to sniff the network traffic. You will need to execute it with the appropriate privileges (usually root) and specify your network interface.
+
+2. **Filter HTTP and HTTPS Traffic:**
+   Even though most web traffic is encrypted using HTTPS, and you won't be able to see the full URLs, you can still capture the domain information through TLS handshakes using bettercap. You can also capture any unencrypted HTTP traffic.
+
+3. **Start Capturing:**
+   To capture and view URLs (not full URLs in HTTPS, just the domain names) on the fly in the bettercap CLI, you can enable the sniffer and set it to show only the relevant data.
+
+Here's how you can configure bettercap to capture web traffic:
+
+```bash
+sudo bettercap -iface eth0  # replace eth0 with your interface name
+
+# now inside bettercap's interactive CLI
+bettercap> set net.sniff.local true # if you want to include your own traffic
+bettercap> set net.sniff.filter 'tcp and (port 80 or port 443)'
+bettercap> net.sniff on
+```
+
+This configuration will start displaying the HTTP and HTTPS traffic directly in the bettercap CLI. For HTTP traffic, you might see actual GET or POST requests with full URLs. For HTTPS, you will typically only see the domain names due to encryption.
+- **HTTP Traffic**: If you are running a website locally on your network that does not use HTTPS, you can see full URLs (including the path and query string) because the traffic is unencrypted.
+- **HTTPS Traffic**: Due to encryption, you cannot see the full URLs; however, during the TLS handshake, the client specifies the hostname it wants to connect to (this is called Server Name Indication or SNI), and you can capture this information to see which domain is being accessed.

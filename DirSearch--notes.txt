@@ -1,0 +1,71 @@
+DirSearch
+
+Setup:
+If you haven't already, clone the repository and install:
+
+bash
+
+git clone https://github.com/maurosoria/dirsearch.git
+cd dirsearch
+
+Basic Usage:
+
+bash
+
+python3 dirsearch.py -u https://www.example.com -e php,html,js
+
+Here's a breakdown of the options:
+
+    -u: The URL you want to scan.
+    -e: The file extensions you want to search for (like php, html, js, etc.).
+
+Other Useful Options:
+
+    -w: Specify a custom wordlist. By default, DirSearch uses its own wordlist.
+    --recursive: To perform a recursive scan.
+    --timeout: Set a connection timeout.
+
+For a full list of options, use:
+
+bash
+
+python3 dirsearch.py -h
+
+----------------------------------------CHEATSHEET------------DIR-SEARCH-----------------------------------------------------------------------
+
+DirSearch Cheat Sheet:
+
+    Basic scan:
+
+    bash
+
+python3 dirsearch.py -u https://www.example.com -e php,html,js
+
+Using a custom wordlist:
+
+bash
+
+python3 dirsearch.py -u https://www.example.com -e php,html -w /path/to/wordlist.txt
+
+Recursive scan:
+
+bash
+
+python3 dirsearch.py -u https://www.example.com -e php,html --recursive
+
+Setting a connection timeout:
+
+bash
+
+python3 dirsearch.py -u https://www.example.com -e php,html --timeout=10
+
+
+###```````````````````````````````````` **DirSearch Cheat Sheet** ``````````````````````````````````````````````````````````````````````````
+
+| Command | Description |
+|---------|-------------|
+| `python3 dirsearch.py -u https://www.example.com -e php,html,js` | Basic scan with specified extensions. |
+| `python3 dirsearch.py -u https://www.example.com -e php,html -w /path/to/wordlist.txt` | Using a custom wordlist. |
+| `python3 dirsearch.py -u https://www.example.com -e php,html --recursive` | Recursive scan. |
+| `python3 dirsearch.py -u https://www.example.com -e php,html --timeout=10` | Setting a connection timeout. |
+| `python3 dirsearch.py -u https://www.example.com -e php,html --save-logs` | Save logs of the scan. |

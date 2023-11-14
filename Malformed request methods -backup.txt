@@ -1,0 +1,91 @@
+Using `curl`, you can send malformed requests in various ways to test how a server or web application responds. These malformed requests can be helpful in identifying vulnerabilities or misconfigurations. Below are some examples of how you can send malformed requests using `curl`:
+
+### 1. **HTTP Methods:**
+
+- **Unsupported Methods:** Test using unsupported HTTP methods.
+  
+    ```bash
+    curl -X OPTIONS http://www.example.com
+    ```
+
+- **HTTP Verb Tampering:** Try changing the default method (e.g., GET) to another (e.g., POST).
+
+    ```bash
+    curl -X POST http://www.example.com/some-get-endpoint
+    ```
+
+### 2. **Header Tampering:**
+
+- **Host Header Attack:** 
+
+    ```bash
+    curl -H "Host: malicious.com" http://www.example.com
+    ```
+
+- **User-Agent Tampering:**
+
+    ```bash
+    curl -A "malicious_user_agent" http://www.example.com
+    ```
+
+- **Adding Duplicate Headers:**
+  
+    ```bash
+    curl -H "X-Forwarded-For: 127.0.0.1" -H "X-Forwarded-For: malicious.com" http://www.example.com
+    ```
+
+### 3. **Input Tampering:**
+
+- **URL Parameters:**
+
+    ```bash
+    curl "http://www.example.com/page?param1=value1&param2=<script>alert(1)</script>"
+    ```
+
+- **POST Data Tampering:**
+
+    ```bash
+    curl -X POST -d "param1=malformed_data" http://www.example.com/post-endpoint
+    ```
+
+### 4. **Content Length Manipulation:**
+
+- **Sending more data than specified in the Content-Length header:**
+
+    ```bash
+    curl -X POST -H "Content-Length: 5" -d "ThisIsMoreThanFiveChars" http://www.example.com
+    ```
+
+- **Sending less data than specified in the Content-Length header:**
+
+    ```bash
+    curl -X POST -H "Content-Length: 50" -d "ShortData" http://www.example.com
+    ```
+
+### 5. **Special Characters:**
+
+- **Including special characters in the request to test for SQL injection, Cross-Site Scripting (XSS), etc.:**
+
+    ```bash
+    curl "http://www.example.com/page?param1=' OR '1'='1"
+    ```
+
+    ```bash
+    curl "http://www.example.com/page?param1=<script>alert('XSS')</script>"
+    ```
+
+### 6. **Sending Large Requests:**
+
+- **To potentially trigger buffer overflows or to see how the server handles large data:**
+
+    ```bash
+    curl -X POST -d "@largefile.txt" http://www.example.com/upload
+    ```
+
+### 7. **Sending Requests with Malformed HTTP Version:**
+
+    ```bash
+    echo -ne "GET / HTTP/1.9\r\n\r\n" | curl -v --http1.1 --no-buffer -X GET --header "Connection: close" --header "Upgrade-Insecure-Requests: 1" --data-binary @- http://www.example.com
+    ```
+
+These are just a few examples of how you can use `curl` to send malformed requests. Remember always to have permission before testing any system or application, as sending malicious or malformed requests without consent can be illegal and unethical.
