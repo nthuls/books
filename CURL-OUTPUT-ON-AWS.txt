@@ -1,0 +1,37 @@
+The message you're seeing is a warning from `curl`, a command-line tool used to send requests to URLs. The warning is informing you that the URL you are accessing (`https://naswabucket.s3.eu-north-1.amazonaws.com/images/Roch%20gold%20ig.jpg`) is likely to return binary data (in this case, an image), and outputting this directly to your terminal can cause it to display unexpected characters and potentially change its settings (like color or input mode), causing what is commonly called "terminal garbage".
+
+The warning gives you two alternatives:
+
+1. **`--output -`**: This option will tell `curl` to display the binary data in the terminal anyway. This is not recommended for binary files like images because it won't be human-readable and can mess up your terminal.
+
+2. **`--output <FILE>`**: This is the safer option where `<FILE>` should be replaced with a file path where you want to save the output. This way, `curl` will download the file from the provided URL and save it directly to your filesystem, instead of displaying it on the terminal.
+
+To save the image to a file called `image.jpg` in your current directory, you would use the following command:
+
+```shell
+C:\Users\USER>curl -X GET https://naswabucket.s3.eu-north-1.amazonaws.com/images/Roch%20gold%20ig.jpg --output image.jpg
+```
+
+If you're interested in learning more about cloud storage, here are a few concepts and components you might want to explore:
+
+1. **Storage Classes/Buckets**: Understand the different types of storage available (e.g., Amazon S3 Standard, Infrequent Access, One Zone-IA, Glacier, etc.), their use-cases, and cost implications.
+
+2. **Data Consistency**: Learn how cloud storage ensures data consistency, especially in distributed environments where many requests happen simultaneously.
+
+3. **Security and Permissions**: Explore the security mechanisms in place for cloud storage, such as access control lists (ACLs), bucket policies, and user permissions.
+
+4. **Scalability**: Cloud storage is known for its scalability. Research how it allows for the easy addition of storage space and how it manages vast amounts of data.
+
+5. **Data Transfer**: Look into the methods of transferring data to and from cloud storage, including direct upload/download, storage transfer services, and use of APIs.
+
+6. **Object Lifecycle Management**: Cloud storage services usually offer lifecycle policies that you can configure to manage objects efficiently, such as automatically archiving or deleting objects after a certain period.
+
+7. **Versioning**: Some cloud storage services allow you to keep multiple versions of an object in the same bucket. This can be useful for backup and recovery purposes.
+
+8. **Replication**: Learn how data replication works across different geographical regions for higher availability and redundancy.
+
+9. **Cost Management**: Understanding the pricing model is crucial. This includes the cost of storage per GB, the cost of data transfer, and the cost of requests (PUT, GET, DELETE, etc.).
+
+10. **APIs and Integration**: Delve into how cloud storage can be integrated with other services using APIs, and how applications can interact with storage services programmatically.
+
+For a hands-on approach, you can start by creating an account with a cloud provider like AWS, Google Cloud, or Azure, and experimenting with their storage services. They offer free tiers that are perfect for learning purposes.

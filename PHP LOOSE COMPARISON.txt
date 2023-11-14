@@ -1,0 +1,65 @@
+1. if (isset($HTTP_COOKIE_VARS[$cookiename . '_sid'])) {
+2.     $sessiondata = isset($HTTP_COOKIE_VARS[$cookiename . '_data']) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookiename . '_data'])) : array();
+3.     $sessionmethod = SESSION_METHOD_COOKIE;
+4. }
+5. $auto_login_key = $userdata['user_password'];
+6. // We have to login automagically
+7. if( $sessiondata['autologinid'] == $auto_login_key )
+8. {
+9.     // autologinid matches password
+10.     $login = 1;
+11.     $enable_autologin = 1;
+12. }
+
+Instance 1: PHPBB 2.0.12 - Authentication Bypass via unserialize() and Loose Comparison
+
+Core Issue:
+
+The code uses unserialize() on user-supplied data without validation, which is inherently insecure.
+Loose comparison with == between a supposed MD5 hash string and a boolean true value allows an attacker to bypass authentication because a non-empty string is considered equal to true.
+Exploit Mechanism:
+
+An attacker crafts a cookie value with a serialized string containing autologinid set to boolean true and a manipulated userid.
+The PHP == operator considers the string hash equivalent to true, granting access without a valid password.
+Notes for Mitigation:
+
+Always use strict comparison (===) in PHP to prevent type juggling vulnerabilities.
+Do not use unserialize() on user input. If you must, implement integrity checks such as signature verification.
+Replace MD5 with a more robust hashing algorithm and use PHP's password_verify() for password checks.
+
+.....................................................................................................................................
+
+if (isset($HTTP_COOKIE_VARS[$cookiename . '_sid']) {
+    $sessiondata = isset($HTTP_COOKIE_VARS[$cookiename . '_data']) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookiename . '_data'])) : array();
+    $sessionmethod = SESSION_METHOD_COOKIE;
+}
+if(md5($password) == $row['user_password'] && $row['user_active']) {
+    $autologin = (isset($HTTP_POST_VARS['autologin'])) ? TRUE : 0;
+}
+
+Instance 2: PHPBB 2.0.13 - Authentication Bypass via MD5 and Loose Comparison
+
+Core Issue:
+
+The password is hashed with MD5 and compared using loose comparison, which can be fooled when the hash is compared to a boolean true.
+Exploit Mechanism:
+
+The attacker alters the cookie with a serialized string that forces $row['user_password'] to be a boolean true.
+Since any hashed password string loosely equals true, the comparison md5($password) == $row['user_password'] is bypassed.
+Notes for Mitigation:
+
+Strictly compare hashes using === to avoid type juggling.
+Move away from MD5 for password storage and comparisons. Utilize password_hash() and password_verify() for password security in PHP.
+Never trust user input. Cookies should not directly influence authentication logic without rigorous checking.
+General Notes on PHP Type Juggling and Loose Comparisons:
+
+PHP’s == operator performs type conversion if the operands are different types. This can lead to true being considered equal to any non-empty string, which is the root of these vulnerabilities.
+An MD5 hash is a 32-character hex string. In PHP, when compared using ==, this hash will be considered true if compared against a boolean true.
+It is critical for security-sensitive operations to use type-safe practices to ensure that the data types are as expected.
+Conclusion and Best Practices:
+
+Use strict typing (=== and !==) to compare variables.
+Avoid using weak hash functions like MD5 for anything security-related.
+Do not deserialize user input without rigorous validation.
+Regularly update and patch software to fix known security issues.
+Follow security best practices, such as OWASP guidelines, when handling authentication and user input.

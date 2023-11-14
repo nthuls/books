@@ -1,0 +1,19 @@
+You can use the following `nmap` command to perform host discovery, check for open ports, and perform OS detection (banner grabbing):
+
+```bash
+nmap -Pn -p 1-65535 -O -sV <target>
+```
+
+Here's what each part of the command does:
+
+- `-Pn`: This option tells `nmap` not to perform host discovery and assume that the target is online. It skips the host discovery phase.
+
+- `-p 1-65535`: This specifies that `nmap` should scan ports from 1 to 65535, effectively scanning all possible ports. You can adjust this range based on your specific needs.
+
+- `-O`: This option enables OS detection, allowing `nmap` to attempt to determine the operating system of the target host.
+
+- `-sV`: This option enables version detection (banner grabbing), which tries to determine the service and its version running on open ports.
+
+- `<target>`: Replace this with the target host or IP address you want to scan.
+
+Be cautious when running intense scans like this, as it may generate a significant amount of network traffic and may take some time to complete. Additionally, ensure that you have proper authorization to scan the target host, as scanning without permission may violate network security policies and legal regulations.

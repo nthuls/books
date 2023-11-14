@@ -1,0 +1,39 @@
+Of course! Here's a table for the common identifiers:
+
+| Type             | Identifier       | Framework/Description                                               |
+|------------------|------------------|---------------------------------------------------------------------|
+| **Cookies**      |                  |                                                                     |
+|                  | zope3            | Zope                                                                |
+|                  | cakephp          | CakePHP                                                             |
+|                  | kohanasession    | Kohana                                                              |
+|                  | laravel_session  | Laravel                                                             |
+|                  | phpbb3_          | phpBB                                                               |
+|                  | wp-settings      | WordPress                                                           |
+|                  | BITRIX_          | 1C-Bitrix                                                           |
+|                  | AMP              | AMPcms                                                              |
+|                  | django           | Django CMS                                                          |
+|                  | DotNetNukeAnonymous | DotNetNuke                                                        |
+|                  | e107_tz          | e107                                                                |
+|                  | MAKACSESSION     | Indico                                                              |
+|                  | InstantCMS[logdate] | InstantCMS                                                        |
+|                  | CMSPreferredCulture | Kentico CMS                                                       |
+|                  | SN4[12symb]      | MODx                                                                |
+|                  | fe_typo_user     | TYPO3                                                               |
+|                  | Dynamicweb       | Dynamicweb                                                          |
+|                  | lep[some_numeric_value]+sessionid | LEPTON                                                           |
+|                  | Domain=.wix.com  | Wix                                                                 |
+|                  | VivvoSessionId   | VIVVO                                                               |
+| **HTML Source Code** |              |                                                                     |
+|                  | <meta name="generator" content="WordPress 3.9.2" /> | WordPress                               |
+|                  | <body id="phpbb" | phpBB                                                               |
+|                  | <meta name="generator" content="MediaWiki 1.21.9" /> | Mediawiki                              |
+|                  | <meta name="generator" content="Joomla! - Open Source Content Management" /> | Joomla       |
+|                  | <meta name="Generator" content="Drupal 7 (http://drupal.org)" /> | Drupal                                |
+|                  | DNN Platform - [http://www.dnnsoftware.com](http://www.dnnsoftware.com) | DotNetNuke                           |
+| **General Markers** |              |                                                                     |
+|                  | %framework_name% | General placeholder for a framework name                           |
+|                  | powered by       | Generic term indicating the use of a specific technology/framework |
+|                  | built upon       | Another generic term indicating technology/framework usage         |
+|                  | running          | Indicative of a specific technology/framework being used            |
+
+You can store this table for future reference and easily access the information when needed!

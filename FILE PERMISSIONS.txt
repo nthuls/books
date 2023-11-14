@@ -1,0 +1,86 @@
+You've outlined the dangers of improper file permission settings and provided an approach to test and remediate the issue on Linux-based systems. I'll expand on this with a step-by-step guide for each section:
+
+### 1. Test Objectives
+
+Ensure only authorized users can access, read, and modify critical files and directories. Unauthorized access to these files can lead to information leakage, data corruption, and a breach of security boundaries.
+
+### 2. How to Test
+
+#### Tools and Commands:
+
+- **ls**: List the file permissions for a given directory or file.
+  
+  ```bash
+  $ ls -la /PathToCheck/
+  ```
+
+- **namei**: Recursively list file permissions.
+
+  ```bash
+  $ namei -l /PathToCheck/
+  ```
+
+- **find**: Search for files with specific permissions.
+
+  ```bash
+  # Find files that are world-writable
+  $ find /PathToCheck/ -type f -perm -o+w -exec ls -la {} \;
+  
+  # Find directories that are world-writable
+  $ find /PathToCheck/ -type d -perm -o+w -exec ls -la {} \;
+  ```
+
+#### Files/Directories to Check:
+
+- Web files/directory: Especially if serving a web application.
+- Configuration files/directory: They may contain sensitive settings and credentials.
+- Sensitive files: Such as encryption keys, password files, API tokens.
+- Log files: Access to logs can reveal system operation details and potentially sensitive information.
+- Executables: Unauthorized modification can lead to malicious code execution.
+- Database files/directory: Contains user and possibly confidential data.
+- Temp files/directory: Temporary files can sometimes contain sensitive information.
+- Upload files/directory: Uploaded files can sometimes be manipulated by attackers if permissions aren't set correctly.
+
+### 3. Remediation
+
+#### Basic Permissions on Linux:
+
+- **Read (r)**: Permission to read the file.
+- **Write (w)**: Permission to modify the file.
+- **Execute (x)**: Permission to execute the file.
+
+File permissions are usually displayed in three groups: owner, group, and others. 
+
+#### Steps:
+
+1. **Back-Up**: Always back up the data before making any changes.
+
+2. **Ownership**: Ensure that sensitive files are owned by the appropriate user and group. Use `chown` to change the owner and `chgrp` to change the group.
+
+   ```bash
+   $ chown username:groupname /PathToFileOrDirectory/
+   ```
+
+3. **Set Permissions**: Use `chmod` to set the correct permissions. 
+
+   - For files that should be readable and writable by the owner but not accessible by anyone else:
+
+     ```bash
+     $ chmod 600 /PathToFile/
+     ```
+
+   - For directories:
+
+     ```bash
+     $ chmod 700 /PathToDirectory/
+     ```
+
+   - For executables:
+
+     ```bash
+     $ chmod 700 /PathToExecutable/
+     ```
+
+4. **Regular Audits**: Regularly audit and review file and directory permissions to ensure that they remain secure over time, especially after updates or new software installations.
+
+By following these steps, you'll ensure that only authorized users have access to critical resources on the system, mitigating potential risks arising from misconfigured file permissions.
